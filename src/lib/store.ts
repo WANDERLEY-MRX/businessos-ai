@@ -36,14 +36,16 @@ function generateId(): string {
 function getCounter(name: string): number {
   if (typeof window === 'undefined') return 1
   const data = localStorage.getItem(STORAGE_KEYS.counters)
-  const counters: Record<string, number> = data ? JSON.parse(data) : {}
+  let counters: Record<string, number> = {}
+  try { counters = data ? JSON.parse(data) : {} } catch { counters = {} }
   return (counters[name] || 0) + 1
 }
 
 function setCounter(name: string, value: number): void {
   if (typeof window === 'undefined') return
   const data = localStorage.getItem(STORAGE_KEYS.counters)
-  const counters: Record<string, number> = data ? JSON.parse(data) : {}
+  let counters: Record<string, number> = {}
+  try { counters = data ? JSON.parse(data) : {} } catch { counters = {} }
   counters[name] = value
   localStorage.setItem(STORAGE_KEYS.counters, JSON.stringify(counters))
 }
@@ -327,14 +329,15 @@ export function updateServiceOrder(id: string, data: Partial<ServiceOrder>): Ser
   const orders = getServiceOrders()
   const index = orders.findIndex((o) => o.id === id)
   if (index === -1) throw new Error('Service order not found')
+  const { status: _status, statusHistory: _history, ...safeData } = data
   const updated: ServiceOrder = {
     ...orders[index],
-    ...data,
+    ...safeData,
     id: orders[index].id,
     number: orders[index].number,
     createdAt: orders[index].createdAt,
     updatedAt: new Date().toISOString(),
-    statusHistory: data.statusHistory || orders[index].statusHistory,
+    statusHistory: orders[index].statusHistory,
   }
   orders[index] = updated
   setStorage(STORAGE_KEYS.serviceOrders, orders)
@@ -536,7 +539,7 @@ export function initializeStore(): void {
         ...o,
         id: generateId(),
         number: (i + 1).toString().padStart(6, '0'),
-        customerId: customersData[2]?.id || '',
+        customerId: customersData[0]?.id || '',
         createdAt: now,
         updatedAt: now,
         statusHistory: [

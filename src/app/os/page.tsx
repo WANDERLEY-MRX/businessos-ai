@@ -172,7 +172,7 @@ export default function OSPage() {
                         {order.brand} {order.model}
                       </td>
                       <td className="px-4 py-3">
-                        <Badge className={STATUS_COLORS[order.status]}>
+                        <Badge variant="outline" className={STATUS_COLORS[order.status]}>
                           {STATUS_LABELS[order.status]}
                         </Badge>
                       </td>

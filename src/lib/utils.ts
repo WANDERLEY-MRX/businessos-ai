@@ -101,8 +101,8 @@ export function getOSStatusLabel(status: string): string {
   const labels: Record<string, string> = {
     aberto: 'Aberto',
     em_andamento: 'Em Andamento',
-    aguardando_peca: 'Aguardando Peca',
-    concluido: 'Concluido',
+    aguardando_peca: 'Aguardando Peça',
+    concluido: 'Concluído',
     entregue: 'Entregue',
   };
   return labels[status] || status;
@@ -122,8 +122,8 @@ export function getOSStatusColor(status: string): string {
 export function getPaymentMethodLabel(method: string): string {
   const labels: Record<string, string> = {
     dinheiro: 'Dinheiro',
-    credito: 'Credito',
-    debito: 'Debito',
+    credito: 'Crédito',
+    debito: 'Débito',
     pix: 'PIX',
     fiado: 'Fiado',
   };
@@ -134,12 +134,12 @@ export function getExpenseCategoryLabel(category: string): string {
   const labels: Record<string, string> = {
     aluguel: 'Aluguel',
     energia: 'Energia',
-    agua: 'Agua',
+    agua: 'Água',
     fornecedor: 'Fornecedor',
-    salario: 'Salario',
+    salario: 'Salário',
     transporte: 'Transporte',
     marketing: 'Marketing',
-    manutencao: 'Manutencao',
+    manutencao: 'Manutenção',
     outros: 'Outros',
   };
   return labels[category] || category;

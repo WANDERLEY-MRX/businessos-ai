@@ -3,16 +3,12 @@ import { formatCurrency, formatDateTime, getOSStatusLabel, getPaymentMethodLabel
 
 export function printReceipt(sale: Sale, settings: StoreSettings): void {
   const html = generateReceiptHTML(sale, settings)
-  for (let i = 0; i < settings.print.copies; i++) {
-    openPrintWindow(html)
-  }
+  openPrintWindow(html)
 }
 
 export function printOS(os: ServiceOrder, settings: StoreSettings): void {
   const html = generateOSHTML(os, settings)
-  for (let i = 0; i < settings.print.copies; i++) {
-    openPrintWindow(html)
-  }
+  openPrintWindow(html)
 }
 
 function generateReceiptHTML(sale: Sale, settings: StoreSettings): string {
@@ -136,7 +132,6 @@ function generateOSHTML(os: ServiceOrder, settings: StoreSettings): string {
   <hr style="margin:8px 0;border-color:#000;">
   <div style="font-weight:bold;font-size:${fontSize};margin-bottom:6px;">DADOS DO CLIENTE</div>
   <div style="font-size:${fontSize};margin-bottom:4px;">Nome: ${os.customerName}</div>
-  <div style="font-size:${fontSize};margin-bottom:4px;">ID: ${os.customerId}</div>
   <hr style="margin:8px 0;border-color:#000;">
   <div style="font-weight:bold;font-size:${fontSize};margin-bottom:6px;">DADOS DO EQUIPAMENTO</div>
   <div style="font-size:${fontSize};margin-bottom:4px;">Tipo: ${os.deviceType}</div>
@@ -177,9 +172,11 @@ function generateOSHTML(os: ServiceOrder, settings: StoreSettings): string {
 
 function openPrintWindow(html: string): void {
   const printWindow = window.open('', '_blank')
-  if (printWindow) {
-    printWindow.document.write(html)
-    printWindow.document.close()
-    printWindow.print()
+  if (!printWindow) {
+    alert('A janela de impressão foi bloqueada. Permita pop-ups para este site.')
+    return
   }
+  printWindow.document.write(html)
+  printWindow.document.close()
+  printWindow.print()
 }

@@ -103,7 +103,7 @@ test.describe('OS Module', () => {
     await expect(main(page).getByText('Em Andamento').first()).toBeVisible();
 
     await main(page).getByRole('button', { name: 'Concluir' }).click();
-    await expect(main(page).getByText('Concluido').first()).toBeVisible();
+    await expect(main(page).getByText('Concluído').first()).toBeVisible();
 
     await main(page).getByRole('button', { name: 'Entregar' }).click();
     await expect(main(page).getByText('Entregue').first()).toBeVisible();
@@ -121,17 +121,17 @@ test.describe('OS Module', () => {
     await main(page).getByRole('button', { name: 'Iniciar Atendimento' }).click();
     await expect(main(page).getByText('Em Andamento').first()).toBeVisible();
 
-    await main(page).getByRole('button', { name: 'Aguardando Peca' }).click();
-    await expect(main(page).getByText('Aguardando Peca').first()).toBeVisible();
+    await main(page).getByRole('button', { name: 'Aguardando Peça' }).click();
+    await expect(main(page).getByText('Aguardando Peça').first()).toBeVisible();
 
     await main(page).getByRole('button', { name: 'Retomar' }).click();
     await expect(main(page).getByText('Em Andamento').first()).toBeVisible();
 
-    await main(page).getByRole('button', { name: 'Aguardando Peca' }).click();
-    await expect(main(page).getByText('Aguardando Peca').first()).toBeVisible();
+    await main(page).getByRole('button', { name: 'Aguardando Peça' }).click();
+    await expect(main(page).getByText('Aguardando Peça').first()).toBeVisible();
 
     await main(page).getByRole('button', { name: 'Concluir' }).click();
-    await expect(main(page).getByText('Concluido').first()).toBeVisible();
+    await expect(main(page).getByText('Concluído').first()).toBeVisible();
   });
 
   test('edit OS device details', async ({ page }) => {

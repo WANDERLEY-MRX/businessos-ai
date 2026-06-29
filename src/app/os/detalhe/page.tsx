@@ -22,14 +22,14 @@ const STATUS_COLORS: Record<OSStatus, string> = {
   concluido: 'bg-green-100 text-green-800',
   entregue: 'bg-purple-100 text-purple-800',
 }
-const STATUS_LABELS: Record<OSStatus, string> = { aberto: 'Aberto', em_andamento: 'Em Andamento', aguardando_peca: 'Aguardando Peca', concluido: 'Concluido', entregue: 'Entregue' }
+const STATUS_LABELS: Record<OSStatus, string> = { aberto: 'Aberto', em_andamento: 'Em Andamento', aguardando_peca: 'Aguardando Peça', concluido: 'Concluído', entregue: 'Entregue' }
 const DEVICE_TYPES = ['Notebook', 'Celular', 'Tablet', 'TV', 'Monitor', 'Outro']
 
 function getNextStatuses(current: OSStatus): { status: OSStatus; label: string; icon: React.ReactNode }[] {
   switch (current) {
     case 'aberto': return [{ status: 'em_andamento', label: 'Iniciar Atendimento', icon: <Check className="h-4 w-4" /> }]
     case 'em_andamento': return [
-      { status: 'aguardando_peca', label: 'Aguardando Peca', icon: <Package className="h-4 w-4" /> },
+      { status: 'aguardando_peca', label: 'Aguardando Peça', icon: <Package className="h-4 w-4" /> },
       { status: 'concluido', label: 'Concluir', icon: <Check className="h-4 w-4" /> },
     ]
     case 'aguardando_peca': return [
@@ -77,10 +77,16 @@ function OSDetailForm() {
 
   const handleStatusChange = (ns: OSStatus) => {
     if (!order || !id) return
-    updateOSStatus(order.id, ns); const updated = getServiceOrder(id); if (updated) setOrder(updated)
+    try {
+      updateOSStatus(order.id, ns)
+      const updated = getServiceOrder(id)
+      if (updated) setOrder(updated)
+    } catch {
+      alert('Erro ao alterar status. Tente novamente.')
+    }
   }
 
-  const handleDelete = () => { if (!id) return; deleteServiceOrder(id); router.push('/os') }
+  const handleDelete = () => { if (!id) return; try { deleteServiceOrder(id); router.push('/os') } catch { alert('Erro ao excluir OS.') } }
   const handlePrint = () => { if (order) printOS(order, getSettings()) }
 
   if (loading || !order) return <PageLoading />
@@ -93,7 +99,7 @@ function OSDetailForm() {
       <div className="flex items-center gap-4">
         <Link href="/os"><Button variant="ghost" size="icon"><ArrowLeft className="h-4 w-4" /></Button></Link>
         <div className="flex-1"><h1 className="text-2xl font-bold tracking-tight">OS #{order.number}</h1><p className="text-muted-foreground">{order.customerName}</p></div>
-        <Badge className={STATUS_COLORS[order.status]}>{STATUS_LABELS[order.status]}</Badge>
+        <Badge variant="outline" className={STATUS_COLORS[order.status]}>{STATUS_LABELS[order.status]}</Badge>
       </div>
       <div className="flex flex-wrap gap-2">
         <Button variant="outline" onClick={handlePrint}><Printer className="mr-2 h-4 w-4" />Imprimir</Button>
@@ -124,7 +130,7 @@ function OSDetailForm() {
                   <Input label="Mao de Obra (R$)" type="number" step="0.01" min="0" value={form.serviceValue} onChange={(e) => handleChange('serviceValue', e.target.value)} />
                   <Input label="Pecas (R$)" type="number" step="0.01" min="0" value={form.partsValue} onChange={(e) => handleChange('partsValue', e.target.value)} />
                 </div>
-                <div className="flex items-center justify-between rounded-lg border bg-muted/50 px-4 py-3"><span className="font-medium">Total</span><span className="text-lg font-bold">{totalValue.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</span></div>
+                <div className="flex items-center justify-between rounded-lg border bg-muted/50 px-4 py-3"><span className="font-medium">Total</span><span className="text-lg font-bold">{formatCurrency(totalValue)}</span></div>
                 <div className="flex justify-end gap-3 pt-4"><Button variant="outline" onClick={() => setEditMode(false)}>Cancelar</Button><Button onClick={handleSave}><Save className="mr-2 h-4 w-4" />Salvar</Button></div>
               </CardContent>
             </Card>

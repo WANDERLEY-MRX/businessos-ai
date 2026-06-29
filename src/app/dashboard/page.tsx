@@ -159,7 +159,7 @@ export default function DashboardPage() {
                     <tr key={os.id} className="hover:bg-gray-50 transition-colors">
                       <td className="px-5 py-3 text-sm font-medium text-gray-900">#{os.number}</td>
                       <td className="px-5 py-3 text-sm text-gray-600">{os.customerName || '—'}</td>
-                      <td className="px-5 py-3 text-sm text-gray-600">{os.equipment} {os.brand} {os.model}</td>
+                      <td className="px-5 py-3 text-sm text-gray-600">{os.deviceType} {os.brand} {os.model}</td>
                       <td className="px-5 py-3">
                         <span className="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-violet-100 text-violet-800">
                           {getOSStatusLabel(os.status)}
