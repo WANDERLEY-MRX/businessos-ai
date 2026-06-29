@@ -341,11 +341,22 @@ export function updateServiceOrder(id: string, data: Partial<ServiceOrder>): Ser
   return updated
 }
 
+const VALID_TRANSITIONS: Record<OSStatus, OSStatus[]> = {
+  aberto: ['em_andamento'],
+  em_andamento: ['aguardando_peca', 'concluido'],
+  aguardando_peca: ['em_andamento', 'concluido'],
+  concluido: ['entregue'],
+  entregue: [],
+}
+
 export function updateOSStatus(id: string, status: OSStatus, note?: string): ServiceOrder {
   const orders = getServiceOrders()
   const index = orders.findIndex((o) => o.id === id)
   if (index === -1) throw new Error('Service order not found')
   const order = orders[index]
+  if (!VALID_TRANSITIONS[order.status]?.includes(status)) {
+    throw new Error(`Transicao invalida: ${order.status} -> ${status}`)
+  }
   const now = new Date().toISOString()
   const updated: ServiceOrder = {
     ...order,

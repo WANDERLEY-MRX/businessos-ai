@@ -11,7 +11,7 @@ import { Modal, ModalContent, ModalHeader, ModalTitle, ModalDescription, ModalFo
 import { EmptyState } from '@/components/shared/empty-state'
 import { PageLoading } from '@/components/shared/loading'
 import { getServiceOrders, deleteServiceOrder } from '@/lib/store'
-import { formatCurrency, formatDateTime, getOSStatusLabel } from '@/lib/utils'
+import { formatCurrency, formatDateTime } from '@/lib/utils'
 import { ServiceOrder, OSStatus } from '@/lib/types'
 import { Search, Plus, Wrench, Pencil, Trash2 } from 'lucide-react'
 

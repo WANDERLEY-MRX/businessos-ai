@@ -177,7 +177,7 @@ export const seedServiceOrders: Omit<ServiceOrder, 'id' | 'number' | 'createdAt'
   {
     customerId: '',
     customerName: 'Pedro Oliveira',
-    deviceType: 'Smartphone',
+    deviceType: 'Celular',
     brand: 'Samsung',
     model: 'Galaxy S23',
     reportedDefect: 'Tela não liga',

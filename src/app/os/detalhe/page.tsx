@@ -38,6 +38,7 @@ function getNextStatuses(current: OSStatus): { status: OSStatus; label: string; 
     ]
     case 'concluido': return [{ status: 'entregue', label: 'Entregar', icon: <ChevronRight className="h-4 w-4" /> }]
     case 'entregue': return []
+    default: return []
   }
 }
 
@@ -65,6 +66,10 @@ function OSDetailForm() {
 
   const handleSave = () => {
     if (!order || !id) return
+    if (!form.brand.trim() || !form.model.trim() || !form.reportedDefect.trim()) {
+      alert('Marca, modelo e defeito sao obrigatorios.')
+      return
+    }
     const sv = parseFloat(form.serviceValue) || 0, pv = parseFloat(form.partsValue) || 0
     updateServiceOrder(order.id, { deviceType: form.deviceType, brand: form.brand.trim(), model: form.model.trim(), serialNumber: form.serialNumber.trim() || undefined, reportedDefect: form.reportedDefect.trim(), technicalReport: form.technicalReport.trim() || undefined, partsUsed: form.partsUsed.trim() || undefined, serviceValue: sv, partsValue: pv, totalValue: sv + pv })
     const updated = getServiceOrder(id); if (updated) setOrder(updated); setEditMode(false)

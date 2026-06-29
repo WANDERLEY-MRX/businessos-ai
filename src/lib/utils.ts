@@ -100,10 +100,10 @@ export function truncate(text: string, maxLength: number): string {
 export function getOSStatusLabel(status: string): string {
   const labels: Record<string, string> = {
     aberto: 'Aberto',
-    'em_andamento': 'Em Andamento',
-    aguardando: 'Aguardando',
-    concluido: 'Concluído',
-    cancelado: 'Cancelado',
+    em_andamento: 'Em Andamento',
+    aguardando_peca: 'Aguardando Peca',
+    concluido: 'Concluido',
+    entregue: 'Entregue',
   };
   return labels[status] || status;
 }
@@ -111,10 +111,10 @@ export function getOSStatusLabel(status: string): string {
 export function getOSStatusColor(status: string): string {
   const colors: Record<string, string> = {
     aberto: 'bg-blue-100 text-blue-800',
-    'em_andamento': 'bg-yellow-100 text-yellow-800',
-    aguardando: 'bg-orange-100 text-orange-800',
+    em_andamento: 'bg-yellow-100 text-yellow-800',
+    aguardando_peca: 'bg-orange-100 text-orange-800',
     concluido: 'bg-green-100 text-green-800',
-    cancelado: 'bg-red-100 text-red-800',
+    entregue: 'bg-purple-100 text-purple-800',
   };
   return colors[status] || 'bg-gray-100 text-gray-800';
 }
@@ -122,11 +122,10 @@ export function getOSStatusColor(status: string): string {
 export function getPaymentMethodLabel(method: string): string {
   const labels: Record<string, string> = {
     dinheiro: 'Dinheiro',
-    cartao_credito: 'Cartão de Crédito',
-    cartao_debito: 'Cartão de Débito',
+    credito: 'Credito',
+    debito: 'Debito',
     pix: 'PIX',
-    boleto: 'Boleto',
-    transferencia: 'Transferência',
+    fiado: 'Fiado',
   };
   return labels[method] || method;
 }
@@ -135,15 +134,12 @@ export function getExpenseCategoryLabel(category: string): string {
   const labels: Record<string, string> = {
     aluguel: 'Aluguel',
     energia: 'Energia',
-    agua: 'Água',
-    internet: 'Internet',
-    telefone: 'Telefone',
-    funcionarios: 'Funcionários',
-    materiais: 'Materiais',
-    equipamentos: 'Equipamentos',
-    transportes: 'Transportes',
+    agua: 'Agua',
+    fornecedor: 'Fornecedor',
+    salario: 'Salario',
+    transporte: 'Transporte',
     marketing: 'Marketing',
-    impostos: 'Impostos',
+    manutencao: 'Manutencao',
     outros: 'Outros',
   };
   return labels[category] || category;
